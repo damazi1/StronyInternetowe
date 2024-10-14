@@ -1,0 +1,19 @@
+li {
+    background-color: red;
+    padding: 10px 5px;
+    margin: 10px 5px;
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    font-family:cursive;
+}
+ul{
+    background-color: gray;
+    padding-bottom: 20px;
+}
+.kolorowo{
+    color: blue;
+}
+#kolorowo{
+    color: green;
+}
