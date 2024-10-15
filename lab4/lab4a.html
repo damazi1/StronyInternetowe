@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #kosci {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            padding: 10px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="hiperlacze"><button id="przycisk">Przycisk do JS</button></div>
+    <script>
+        let przycisk = document.getElementById("przycisk");
+        let kontener = document.getElementById("hiperlacze")
+        let kosci = document.getElementById("kosci")
+        przycisk.onclick = function () {
+            kosci.innerHTML=""
+            for(let i=0;i<5;i++){
+                let nowyDiv = document.createElement("div");
+                nowyDiv.setAttribute("id","kosci");
+                nowyDiv.innerHTML = Math.ceil(Math.random()*6);
+                kontener.appendChild(nowyDiv);
+            }
+        }
+    </script>
+</body>
+</html>
