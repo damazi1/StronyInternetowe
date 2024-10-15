@@ -15,13 +15,13 @@
     </style>
 </head>
 <body>
-    <div id="hiperlacze"><button id="przycisk">Przycisk do JS</button></div>
+    <button id="przycisk">Przycisk do JS</button>
+    <div id="hiperlacze"></div>
     <script>
         let przycisk = document.getElementById("przycisk");
         let kontener = document.getElementById("hiperlacze")
-        let kosci = document.getElementById("kosci")
         przycisk.onclick = function () {
-            kosci.innerHTML=""
+            kontener.innerHTML="";
             for(let i=0;i<5;i++){
                 let nowyDiv = document.createElement("div");
                 nowyDiv.setAttribute("id","kosci");

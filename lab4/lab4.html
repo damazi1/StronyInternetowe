@@ -17,13 +17,14 @@
     <div>Wszystkie linki na stronie:<br><div id="hiperlacza"></div></div>
         <script>
             let wezly = document.querySelectorAll("#tresc a")
-            let nowe = document.getElementById("hiperlacza")
+            let nowe = document.getElementById("hiperlacza")         
             for(let i=0;i<wezly.length; i++){
                 let kopia = wezly[i].cloneNode(true); // wezel zastąpić znalezionymi węzłami
                 let link = document.createTextNode(kopia.href);
                 nowe.appendChild(kopia);
                 nowe.appendChild(link);
-                nowe.appendChild(document.createElement("br"));
+                let br = document.createElement("br")
+                nowe.appendChild(br);
             }
             nowe.style.backgroundColor="red"
     </script>
