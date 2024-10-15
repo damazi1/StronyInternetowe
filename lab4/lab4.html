@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #hiperlacza { background: silver; border: 1px solid black;display: inline-block;}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="tresc">Witaj na <a href="start.html">Mojej stronie</a>, polecam odwiedzić
+    takie serwisy jak: <ul><li><a href="http://google.com">Google</a></li><li><a
+    href="https://pl.wikipedia.org/wiki/Wiki">Wikipedia</a></li><li><a
+    href="https://stackoverflow.com/">StackOverflow</a></li></ul>Więcej informacji o mnie można
+    znaleźć <a href="omnie.html">tutaj</a>.</div>
+    <div>Wszystkie linki na stronie:<br><div id="hiperlacza"></div></div>
+        <script>
+            let wezly = document.querySelectorAll("#tresc a")
+            let nowe = document.getElementById("hiperlacza")
+            let br = document.createElement("br")
+            for(let i=0;i<wezly.length; i++){
+                let kopia = wezly[i].cloneNode(true); // wezel zastąpić znalezionymi węzłami
+                nowe.appendChild(kopia);
+                nowe.appendChild(br);
+            }
+            nowe.style.backgroundColor="red"
+    </script>
+    </body>
+</html>
