@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        @keyframes obrot {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pole {
+            position: fixed;
+            width: 110px;
+            height: 110px;
+            margin: 10px;
+        }
+
+        .pole {
+            text-align: center;
+            font-size: 100px;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .anim {
+            animation: obrot 1s forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="plansza" style="padding: 300px;"></div>
+    <span id="info"></span>
+    <script>
+        const liczbaKolorow = 8; // liczba kolorów na planszy
+        const kolory = []; // zapamiętane kolory
+        const polaMemory = []; // zapamiętane indeksy kolorów
+        const bazowy = "rgb(50, 50, 50)"; // kolor bazowy
+        let trybSprawdzenia = 0; // tryb sprawdzenia
+        let zapamietanyIndeks = 0; // zapamiętany indeks koloru
+        let zapamietanyA = null; // zapamiętany element a
+        let zapamietanyB = null; // zapamiętany element b
+        for (let i = 0; i < liczbaKolorow; i++) { // przypisanie pol
+            polaMemory[i * 2] = i;
+            polaMemory[i * 2 + 1] = i;
+            let r = 70 + Math.floor(Math.random() * 185);
+            let g = 70 + Math.floor(Math.random() * 185);
+            let b = 70 + Math.floor(Math.random() * 185);
+            kolory[i] = "rgb(" + r + "," + g + "," + b + ")";
+        }
+        for (let i = 0; i < 200; i++) { // losowe wymieszanie
+            let indeks1 = Math.floor(Math.random() * polaMemory.length);
+            let indeks2 = Math.floor(Math.random() * polaMemory.length);
+            let tmp = polaMemory[indeks1];
+            polaMemory[indeks1] = polaMemory[indeks2];
+            polaMemory[indeks2] = tmp;
+        }
+        let px = 20, py = 20, pspace = 20, psize = 120, pgrid = 4;
+        let tmp=0;
+        let ods=0;
+        for (let i = 0; i < liczbaKolorow * 2; i++) { // utworzenie pól
+            const pole = document.createElement("div"); // nowe pole
+            pole.classList.add("pole");
+            pole.style.backgroundColor = bazowy;
+            pole.style.left = px + "px";
+            pole.style.top = py + "px";
+            px += psize + pspace;
+            if ((i % pgrid) == pgrid - 1) { px = pspace; py += psize + pspace; }
+            pole.onclick = function () { // obsługa kliknięcia w pole
+                if (polaMemory[i] == -1) return; // gdy element jest już odkryty
+                switch (trybSprawdzenia) {
+                    case 0: { // odwracamy i zapamiętujemy pierwszy kolor
+                        if (zapamietanyB != null) { // gdy się nie udało zakrywamy pola
+                            zapamietanyA.innerHTML = zapamietanyB.innerHTML = "";
+                            zapamietanyA.style.backgroundColor = bazowy;
+                            zapamietanyB.style.backgroundColor = bazowy;
+                        }
+                        zapamietanyA = pole; // zapamiętujemy kliknięte pole
+                        zapamietanyIndeks = i; // oraz jego indeks z tablicy
+                        pole.style.backgroundColor = kolory[polaMemory[i]];
+                        pole.innerHTML = polaMemory[i]; // wpisujemy indeks
+                        trybSprawdzenia = 1; // będziemy sprawdzać drugie pole
+                    } break;
+                    case 1: { // sprawdzamy drugi kolor
+                        if (zapamietanyA == pole) return;
+                        pole.style.backgroundColor = kolory[polaMemory[i]];
+                        pole.innerHTML = polaMemory[i]; // wpisujemy indeks
+                        if (polaMemory[zapamietanyIndeks] == polaMemory[i]) {
+                            polaMemory[i] = polaMemory[zapamietanyIndeks] = -1;
+                            zapamietanyA.classList.add("anim");
+                            pole.classList.add("anim");
+                            zapamietanyA = zapamietanyB = null; // zostawiamy odkryte pola
+                            ods++;
+                            if(ods==8){
+                                zwyciestwo();
+                            }
+                            else{
+                                updateInfo();
+                            }
+                        } else { // gdy inny kolor
+                            zapamietanyB = pole; // zapamiętujemy drugie pole
+                            tmp++;
+                            updateInfo();
+                        }
+                        trybSprawdzenia = 0;
+                    } break;
+                }
+            }
+            document.getElementById("plansza").appendChild(pole);
+        }
+        function updateInfo() {
+            let info = document.getElementById("info");
+            info.innerHTML = "";  // Czyszczenie zawartości przed dodaniem nowych danych
+            let abc = document.createElement("h1");
+            abc.textContent = "Odsłonięte pary: " + ods + " | Błędne próby: " + tmp + " | Łączne próby: "+ (ods+tmp);
+            info.appendChild(abc);
+        }
+        function zwyciestwo(){
+            let info = document.getElementById("info");
+           let abc = document.createElement("h1");
+            abc.textContent = "WYGRAŁEŚ";
+            info.appendChild(document.createElement("br"));
+            info.appendChild(abc);
+        }
+        updateInfo();
+
+    </script>
+</body>
+
+</html>

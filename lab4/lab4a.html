@@ -15,18 +15,46 @@
     </style>
 </head>
 <body>
-    <button id="przycisk">Przycisk do JS</button>
+    <button id="przycisk">Przycisk do rzutu kościmi</button>
+    <button id="reroll">Przycisk do przerzutu koścmi</button>
     <div id="hiperlacze"></div>
+    <span id="info"></span>
     <script>
         let przycisk = document.getElementById("przycisk");
-        let kontener = document.getElementById("hiperlacze")
+        let reroll = document.getElementById("reroll");
+        let kontener = document.getElementById("hiperlacze");
+        let info = document.getElementById("info");
         przycisk.onclick = function () {
             kontener.innerHTML="";
+            info.innerHTML="";
+            let j = 0
             for(let i=0;i<5;i++){
                 let nowyDiv = document.createElement("div");
                 nowyDiv.setAttribute("id","kosci");
                 nowyDiv.innerHTML = Math.ceil(Math.random()*6);
                 kontener.appendChild(nowyDiv);
+                nowyDiv.onclick = function (){
+                    kontener.removeChild(nowyDiv);
+                    j++;
+                    info.innerHTML="";
+                    info.append(j);
+                }                         
+            }
+            reroll.onclick = function () {
+                for(let i=0;i<j;i++){
+                let nowyDiv = document.createElement("div");
+                nowyDiv.setAttribute("id","kosci");
+                nowyDiv.innerHTML = Math.ceil(Math.random()*6);
+                kontener.appendChild(nowyDiv);
+                nowyDiv.onclick = function (){
+                    kontener.removeChild(nowyDiv);
+                    j++;
+                    info.innerHTML="";
+                    info.append(j);
+                }                         
+                }
+                j=0;
+                info.innerHTML=""
             }
         }
     </script>
