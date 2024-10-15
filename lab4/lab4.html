@@ -18,11 +18,11 @@
         <script>
             let wezly = document.querySelectorAll("#tresc a")
             let nowe = document.getElementById("hiperlacza")
-            let br = document.createElement("br")
             for(let i=0;i<wezly.length; i++){
+                let link=wezly[i].href;
                 let kopia = wezly[i].cloneNode(true); // wezel zastąpić znalezionymi węzłami
                 nowe.appendChild(kopia);
-                nowe.appendChild(br);
+                nowe.appendChild(document.createElement("br"));
             }
             nowe.style.backgroundColor="red"
     </script>
