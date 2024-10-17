@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="nowe">dodaj przyciski</button>
+    <div id="butt"></div>
+    <script>
+        let przycisk=document.getElementById("nowe")
+        let bu=document.getElementById("butt")
+        let tmp=1
+        przycisk.onclick = function(){
+            for(let i=0;i<tmp;i++){
+                let but = document.createElement("button")
+                but.textContent="przycisk"
+                bu.appendChild(but)
+            }
+            tmp*=2;
+        }
+    </script>
+</body>
+</html>

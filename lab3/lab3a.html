@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="liczba1">
+    <input id="liczba2" oninput="last()">
+    <button onclick="add()">Dodaj</button>
+    <button onclick="sub()">Odejmij</button>
+    <button onclick="mul()">pomnóż</button>
+    <button onclick="div()">podziel</button>
+    <br>
+    <span id="wynik">Wynik = </span>
+    <script>
+        let l1 = document.getElementById("liczba1")
+        let l2 = document.getElementById("liczba2")
+        let wyn = document.getElementById("wynik")
+        let tmp = ""
+        function add() {
+            wyn.innerHTML="Wynik = ";
+            let l3 = parseFloat(l1.value)+parseFloat(l2.value)
+            wyn.append(l3)
+            tmp="a"
+        }
+        function sub() {
+            wyn.innerHTML="Wynik = ";
+            let l3 = parseFloat(l1.value)-parseFloat(l2.value)
+            wyn.append(l3)
+            tmp="s"
+        }
+        function mul() {
+            wyn.innerHTML="Wynik = ";
+            let l3 = parseFloat(l1.value)*parseFloat(l2.value)
+            wyn.append(l3)
+            tmp="m"
+        }
+        function div() {
+            wyn.innerHTML="Wynik = ";
+            let l3 = parseFloat(l1.value)/parseFloat(l2.value)
+            wyn.append(l3)
+            tmp="d"
+        }
+        function last() {
+            switch(tmp){
+                case a:
+                    add()
+                    break;
+                case s:
+                    sub()
+                    break;
+                case m:
+                    mul()
+                    break;
+                case d:
+                    div()
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

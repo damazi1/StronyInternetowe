@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="hiperlacza"></p>
+    <script>
+        let hiperlacza=document.getElementById("hiperlacza")
+        let tab=[5,7,21,11,9,19,23]
+        function suma(tab) {
+            let suma=0
+            for(let i=0;i<tab.length;i++){
+                suma+=tab[i];
+            }
+            hiperlacza.append("suma: "+suma);
+        }
+        function min(tab) {
+            let min=999
+            for(let i=0;i<tab.length;i++){
+                if(min>tab[i]) min=tab[i];
+            }
+            hiperlacza.append("minimum: "+min);
+        }
+        function max(tab) {
+            let max=0
+            for(let i=0;i<tab.length;i++){
+                if(max<tab[i]) max=tab[i];
+            }
+            hiperlacza.append("maksimum: "+max);
+
+        }
+        suma(tab)
+        hiperlacza.appendChild(document.createElement("br"))
+        min(tab)
+        hiperlacza.appendChild(document.createElement("br"))
+        max(tab)
+    </script>
+</body>
+</html>
