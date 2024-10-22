@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tutaj" border="1">
+        <tr>
+            <td>Imie i Nazwisko</td>
+            <td>pensja</td>
+            <td>premia</td>
+        </tr>
+    </table>
+    <script>
+        class Osoba {
+            constructor(imie, nazwisko, rokUrodzenia){
+                this.imie=imie;
+                this.nazwisko=nazwisko;
+                this.rokUrodzenia=rokUrodzenia;
+            }
+            wypiszInformacje(){
+                console.log(this.imie+" "+ this.nazwisko+" "+ this.rokUrodzenia);
+            }
+        }
+
+        class Pracownik extends Osoba {
+            constructor(imie,nazwisko, rokUrodzenia, pensja, premia){
+                super(imie,nazwisko,rokUrodzenia);
+                this.pensja=pensja;
+                this.premia=premia;
+            }
+            wypiszInformacje(){
+                super.wypiszInformacje()+console.log(" "+this.pensja+" "+ this.premia)
+            }
+            utworz() {
+                let tabela = document.getElementById("tutaj");
+
+                let row = document.createElement("tr");
+                let c1 = document.createElement("td");
+                c1.innerText = this.imie + " " + this.nazwisko[0];
+                row.appendChild(c1);
+                let c2 = document.createElement("td");
+                c2.innerText = this.pensja;
+                row.appendChild(c2);
+                let c3 = document.createElement("td");
+                c3.innerText = this.premia;
+                row.appendChild(c3);
+                tabela.appendChild(row);
+            }
+        }
+        os1= new Osoba("Dawid", "Ziora", "2002");
+        os1.wypiszInformacje();
+        pr1= new Pracownik("Pan", "Tomima", 2000, 1500, 200)
+        pr1.wypiszInformacje();
+        pr1.utworz()
+    </script>
+</body>
+</html>
