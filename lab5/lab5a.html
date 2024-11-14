@@ -8,6 +8,7 @@
     #pilka { width: 16px; height: 16px; fill: gray; }
     .zwykly { fill: navy; }
     .niezniszczalny {fill: red;}
+    .kox {fill: greenyellow}
 </style>
 </head>
 <body>
@@ -146,14 +147,38 @@ class TrzyKolizje extends Bazowy {
         this.kolizje+=1
         return false
     }
+}
+
+class DodajPilke extends Bazowy {
+    constructor(x,y){
+        super(x,y,kwidth,kheight)
+        this.ksztalt.classList.add("kox")
+    }
+
+    Dodaj(tab){
+        let pilka = new Pilka(pwidth / 2, pheight - 64, 16, 5.5, 2.5);
+        tab.push(pilka); // dodanie piłki do tablicy
+        pilka.umiesc();
+    }
+
+    usun(){ 
+        return true;
+    }
 
 }
+
 let klocki = []; // tablica klocków
 for (let j = 0; j < 4; j++) {
     for (let i = 0; i < 16; i++) {
         let klocek;
-        if(j*2==i) {klocek = new Niezniszczalny(i,j+1);}
-        else{klocek = new TrzyKolizje(i, j + 1);}
+        if(i%j!=1 && i%j!=0 && j!=0) {klocek = new Niezniszczalny(i,j+1);}
+        else if(i+j==4) {
+            klocek = new TrzyKolizje(i,j+1);
+        } else if(i==4) {
+            klocek = new DodajPilke(i,j+1);
+        } else {
+            klocek = new Zwykly(i, j + 1);
+        }
         klocki.push(klocek); // dodanie klocka do tablicy
         klocek.umiesc(); // umieszczenie klocka na planszy
     }
@@ -162,9 +187,6 @@ let pilki = []; // tablica piłek - domyślnie jedna piłka
 let pilka = new Pilka(pwidth / 2, pheight - 64, 16, 5.5, 2.5);
 pilki.push(pilka); // dodanie piłki do tablicy
 pilka.umiesc(); // umieszczenie piłki na planszy
-// let pilka1 = new Pilka(pwidth / 2, pheight - 32, 36, 5.5, 2.5);
-// pilki.push(pilka1); // dodanie piłki do tablicy
-// pilka1.umiesc(); // umieszczenie piłki na planszy
 setInterval(function() {
     for (let i = 0; i < pilki.length; i++) { // aktualizacja piłek
         pilki[i].rusz(); // oblicz nową pozycję piłki
@@ -172,6 +194,9 @@ setInterval(function() {
             if (klocki[k].kolizja(pilki[i])) { // sprawdzenie kolizji
                 pilki[i].odwroc(klocki[k]); // odwrócenie lotu piłki
                 if (klocki[k].usun()) {
+                    if(klocki[k] instanceof DodajPilke){
+                        klocki[k].Dodaj(pilki)
+                    }
                     plansza.removeChild(klocki[k].ksztalt); // usunięcie z obrazka
                     klocki.splice(k, 1); // usunięcie klocka z tablicy
                 }
