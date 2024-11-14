@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+    <body>
+        <div class="container-fluid">
+            <div class="row" style="background-color: #ffc1c1;"> <!-- wiersz 1 - logo i menu -->
+                <div class="col-sm-2">logo</div>
+                <div class="col-sm-10">
+                    <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#przyciski" role="tab"
+                        aria-selected="true">Start</button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#hiperlacze">Galeria</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tekst">Kontakt</button>
+                    </li>
+                </div>
+            </div>
+            <div class="row"> <!-- wiersz 2 - lewa główna i prawa sekcja -->
+                <div id="przyciski" class="tab-pane fade" role="tabpanel" ><button class="btn btn-success btn-lg">Przycisk</button>
+                    <br><button id="pierwszy" class="btn btn-danger btn-lg">Pierwszy</button>
+                    <br> <button id="drugi" class="btn btn-danger btn-lg">Drugi</button>
+                    </div>
+                <div id="hiperlacze" class="tab-pane fade" role="tabpanel">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    </ul>
+                </div>
+                <div id="tekst"class="tab-pane fade" role="tabpanel" ><h1>Fajny przycisk</h1></div>
+            </div>
+        </div>
+        <script>
+            let pierwszy = document.getElementById("pierwszy"); // odnajdujemy obiekt DOM
+            let przycisk = new bootstrap.Button(pierwszy); // przeksztalcamy na Bootstrap button
+            przycisk.toggle(); // wywołujemy metodę zmieniającą stan przycisku Bootstrap button
+        </script>
+    </body>
+</html>
