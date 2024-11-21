@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="p5.min.js"></script>
+</head>
+<body>
+<main></main>
+<script>
+    function setup() {
+    createCanvas(windowWidth, windowHeight, WEBGL);
+    }
+    let kat = 0.0; // obiekt będzie animowany
+    function draw() {
+    background(200);
+    for(let j = -200; j <= 200; j=j+100){
+        for (let i = -200; i <= 200; i=i+100) { // narysowanie 10 sfer
+            push();
+            translate(i,j,0)
+            let x = mouseX-width/2 - i
+            let y = mouseY-height/2 - j
+
+            let s = Math.sqrt(x*x+y*y)/500
+            scale(s);
+            rotateX(kat)
+            if(i==0)
+                rotateZ(kat)
+            box();
+            pop();
+        }
+    }
+    kat += 0.01; // zwiększenie kąta obrotu
+    orbitControl();
+    }
+</script>
+</body>
+</html>
