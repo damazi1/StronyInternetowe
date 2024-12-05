@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FLAPPY</title>
+    <script src="p5.min.js" defer></script>
+</head>
+
+<body>
+    <main></main>
+    <span id="punkty">twoje punkty to = 0</span>
+    <script>
+        let pkt = document.getElementById("punkty")
+        let point = 0;
+        let speed = 2;
+        // stałe
+        const WIDTH = 640 // screen resx
+        const HEIGHT = 480 // screen resy
+        const FLW = 30 // flappy width
+        const FLH = 20 // flappy height
+        const PPW = 30 // pipe radious
+        const ZSP = -100 // z-bufor offset
+        // flappy class
+        class Flappy {
+            // flappy constructor
+            constructor() {
+                this.x = -WIDTH / 2 // x position
+                this.y = -HEIGHT / 4 // y position
+                this.a = 0.0 // acceleration
+                this.v = 0.0 // velocity
+                this.j = 0.0 // jump power
+                this.tmp = 0.0
+            }
+            // uaktualnienie pozycji
+            process() {
+                this.a = 0.10 // acceleration
+                this.v += this.a - this.j // velocity
+                this.y += this.v // position
+                if (this.v > 13.0) this.v = 13.0 // max down speed
+                if (this.v < -13.0) this.v = -13.0 // max up speed
+                if (this.j > 0.0) this.j -= 0.4 // jump power decrease
+            }
+            // ustawienie siły skoku
+            jump() {
+                this.j = 3.0
+                this.v /= 2.0
+            }
+            // sprawdzenie kolizji
+            collision(pipe) {
+                // brak kolizji po x
+                if (Math.abs(this.x - pipe.x) > (FLW + PPW)) {
+                    return false
+                }
+                // kolizja po y
+                let pipes = 2 * pipe.y - pipe.h
+                let pipee = 2 * pipe.y + pipe.h
+                if ((this.y > pipes) && (this.y < pipee)) {
+                    point = 0
+                    return true
+                }
+                // brak kolizji po y
+                return false
+            }
+            // narysowanie obiektu
+            draw() {
+                push()
+                normalMaterial()
+                scale(1.0, 0.5, 1.0)
+                translate(this.x, this.y, ZSP)
+                rotateX(frameCount * 0.1)
+                cylinder(FLW, FLH)
+                pop()
+            }
+        }
+        class Pipe {
+            // pipe constructor
+            constructor(start, end, x) {
+                this.x = x
+                this.h = (end - start) * HEIGHT * 1.5
+                this.y = -HEIGHT * 1.5 / 2 + start * HEIGHT * 1.5 + this.h / 2
+            }
+            // uaktualnienie pozycji
+            process() {
+                this.x-=speed
+            }
+            czyPoza(){
+                if (this.x < - WIDTH/2 - 120){
+                    return true
+                }
+                return false
+            }
+            // narysowanie obiektu
+            draw() {
+                push()
+                noStroke()
+                ambientMaterial(10, 230, 50)
+                translate(this.x, this.y, ZSP)
+                cylinder(PPW, this.h)
+                pop()
+            }
+        }
+        // zmienne globalne (rysowane obiekty)
+        let flappy = new Flappy()
+        let pipe1 = new Pipe(0.00, 0.25, WIDTH / 2)
+        let pipe2 = new Pipe(0.75, 1.00, WIDTH / 2)
+        let pipe3 = new Pipe(0.00, 0.00, 0)
+        let pipe4 = new Pipe(0.00, 0.00, 0)
+
+        // p5.js setup
+        function setup() {
+            createCanvas(WIDTH, HEIGHT, WEBGL)
+        }
+        // funkcja rysująca
+        function draw() {
+            // tło i światła
+            background(190, 210, 230)
+            ambientLight(60, 60, 60)
+            pointLight(255, 255, 255, 0, 0, 100)
+            // sprawdzenie kolizji
+            if (flappy.collision(pipe1) || flappy.collision(pipe2)) {
+                background(80, 0, 0)
+            }
+            // elementy gry
+            flappy.process()
+            flappy.draw()
+            pipe1.process()
+            pipe1.draw()
+            pipe2.process()
+            pipe2.draw()
+            pipe3.process()
+            pipe3.draw()
+            pipe4.process()
+            pipe4.draw()
+            if(pipe1.czyPoza()){
+                tmp = (Math.random()%0.6)
+                pipe1 = new Pipe(0.00, tmp, WIDTH / 2)
+                pipe2 = new Pipe(tmp+0.4, 1.00, WIDTH / 2)
+                point++
+                speed++
+                pkt.innerHTML="twoje punkty to = " + point
+            } else if (pipe3.czyPoza()){
+                pipe3 = new Pipe(0.00,tmp-0.1, WIDTH/2 + 300)
+                pipe4 = new Pipe(tmp+0.6,1.00, WIDTH/2 + 300)
+                point++
+                pkt.innerHTML="twoje punkty to = " + point
+            }
+        }
+        // key press event
+        function keyPressed() {
+            flappy.jump()
+        }
+        // mouse click event
+        function mouseClicked() {
+            flappy.jump()
+        }
+    </script>
+</body>
+
+</html>
