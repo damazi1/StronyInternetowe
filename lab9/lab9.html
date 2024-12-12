@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="
+https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js
+"></script>
+</head>
+
+<body>
+    <div style="width: 600px; height: 400px;">
+        <canvas id="wykres" width="600" height="400"></canvas>
+    </div>
+    <script>
+        const dane = {
+            labels: ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+            datasets: [
+                {
+                    label: "2020",
+                    data: [8280, 17965, 31335, 39511, 34626, 26399],
+                    backgroundColor: ["red","rgba(222, 111, 55, 0.4)","blue","orange","aqua","yellow"]
+                }
+            ]
+        }
+        const opcje ={
+            scales: {
+                    y: {title:{
+                        display: true,
+                        text:"grupa wiekowa"
+                    }},
+                    x: {title:{
+                        display: true,
+                        text:"zaległości(zł)"
+                    }}},
+            plugins:{
+                indexAxis: "y",
+                title: {
+                    display: true, 
+                    text:"Przeciętna zaległość w różnych grupach wiekowych"
+                },
+                legend: {position:"right"}
+            }
+        }
+        const ctx = document.getElementById("wykres").getContext("2d");
+        const wykres = new Chart(ctx, { type: "doughnut", data: dane, options:opcje });
+    </script>
+</body>
+
+</html>

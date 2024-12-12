@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script></head>
+
+<body>
+    <div style="width: 600px; height: 400px;">
+        <canvas id="wykres" width="600" height="400"></canvas>
+    </div>
+    <input type="number" id="x">
+    <input type="number" id="y">
+    <button id="press" onclick="buttPress()">Dodaj Punkt</button>
+    <button onclick="buttRemove()">Usun Punkt</button>
+    <br>
+    <input type="number" id="n">
+    <button onclick="buttRemoveN()">Usun n Punkt</button>
+    <script>
+        const dane = {
+            datasets: [{
+                label: "punkty",
+                data: [
+                    { x: 0, y: 0 },
+                    { x: 1, y: 0 },
+                    { x: 1, y: 1 }
+                ],
+                showLine: true,
+                borderColor:"blue",
+                backgroundColor: "violet",
+                pointRadius: 10
+            }]
+        }
+        const ctx = document.getElementById("wykres").getContext("2d");
+        const wykres = new Chart(ctx, { type: "scatter", data: dane });
+    
+        function buttPress(){
+            let x = parseFloat(document.getElementById("x").value)
+            let y = parseFloat(document.getElementById("y").value)
+            if(x == "" || y == ""){
+                return;
+            }
+            wykres.data.datasets[0].data.push({x: x,y: y})
+            wykres.update()
+        }
+        function buttRemove(){
+            wykres.data.datasets[0].data.shift()
+            wykres.update()
+        }
+
+        function buttRemoveN(){
+            let n = parseFloat(document.getElementById("n").value)
+            if(n == ""){
+                return;
+            }
+            wykres.data.datasets[0].data.splice(n,1)
+            wykres.update()
+        }
+    </script>
+</body>
+
+</html>
