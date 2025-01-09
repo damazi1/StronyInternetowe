@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista studentów</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h3>Lista studentów: </h3>
+
+<table>
+    <tr>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>Index</th>
+        <th>Mail</th>
+    </tr>
+    {{ range . }}
+    <tr>
+        <td>{{ .Imie }}</td>
+        <td>{{ .Nazwisko }}</td>
+        <td>{{ .Index }}</td>
+        <td>{{ .Mail }}</td>
+    </tr>
+    {{ end }}
+</table>
+</body>
+</html>
